@@ -12,9 +12,10 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(ProjectController.class)
@@ -35,9 +36,16 @@ class ProjectControllerTest {
 
         when(this.projectService.findById(1L)).thenReturn(project);
 
+        /*
+        // Validating pages
+        this.mockMvc.perform(get("/projects"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content[0].id", is(1L)));
+        */
         this.mockMvc.perform(get("/projects/1"))
-                .andExpect(status().isOk());
-        //TODO: Validar estrutura do Json
+                .andExpect(status().isOk())
+                // TODO: Validar outros campos do json
+                .andExpect(jsonPath("$.id", is(1)));
 
     }
 

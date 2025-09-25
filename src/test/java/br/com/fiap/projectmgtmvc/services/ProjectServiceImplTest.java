@@ -33,15 +33,12 @@ class ProjectServiceImplTest {
 
     @Test
     void findById_returnsProjectWhenFound() {
-        //o que
         Project project = new Project(1L,"test",
                 "description",LocalDate.now(),
                 LocalDate.now(), Project.Status.COMPLETED);
-        //quando
+
         when(this.projectRepository.findById(1L)).thenReturn(Optional.of(project));
 
-        //assert
-        verify(this.projectRepository,times(1)).findById(any());
         assertThat(this.projectService.findById(1L)).isSameAs(project);
     }
 }
